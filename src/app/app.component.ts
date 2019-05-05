@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { GetQtableService } from './get-qtable.service';
+import { MessageQueueService } from './message-queue.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -7,31 +9,78 @@ import { GetQtableService } from './get-qtable.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageTitle = 'Tickets List';
-  TicketsList: string[] = [];
+ 
+  /**
+   * Memberof  of app component
+   */
+  pageTitle = 'Q services';
 
   /**
+   * List  of app component
+   */
+  List: string[];
+
+  /**
+   * Subscription  of app component
+   */
+  subscription: Subscription;
+  
+
+
+      /**
    * Creates an instance of app component.
    * @param service 
    */
-  constructor(service: GetQtableService) {
+  constructor(private service: MessageQueueService) {
+
+  }
+
+  /**
+   * @memberof AppComponent
+   */
+  ngOnInit(): void {
     try {
-      this.TicketsList = service.getQ();
+      this.subscription = this.service.getQ()
+        .subscribe(List => {
+          this.List = List;
+        });
     }
     catch (err) {
-      console.log(err)
+      console.log(err);
+    }
+  }
+
+
+
+
+
+  /**
+   * Determines whether new on
+   * @memberof AppComponent
+   */
+
+  OnServe(): void {
+    try {
+      this.service.ServeTicket();
+    }
+    catch (err) {
+      console.log(err);
     }
   }
 
   /**
-   * Determines whether serve on
+    * @memberof AppComponent
    */
-  OnServe(): void {
-    //here i will inshaallah call an API to send message through rabbit to serve on e person 
-    //Key word : 
-    //socket IO 
 
+  ngOnDestroy() {
+    try {
+      this.subscription.unsubscribe();
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
+
 
 }
 

@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GetQtableService } from './get-qtable.service';
+import { MessageQueueService } from './message-queue.service';
 
-describe('GetQtableService', () => {
+describe('MessageQueueService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: GetQtableService = TestBed.get(GetQtableService);
+    const service: MessageQueueService = TestBed.get(MessageQueueService);
     expect(service).toBeTruthy();
   });
 });
