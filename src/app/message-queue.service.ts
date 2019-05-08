@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { HttpClientModule,HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class MessageQueueService {
   /**
    * Url  of message queue service
    */
-  private url = 'http://localhost:3000';
+  private url = 'http://localhost:8124';
   List: string[];
   /**
    * Socket  of message queue service
@@ -25,9 +26,10 @@ export class MessageQueueService {
   /**
    * Creates an instance of message queue service.
    */
-  constructor() {
+  constructor(private http:HttpClient) {
     try {
       this.socket = io(this.url);
+      this.ServeTicket();
     }
     catch (err) {
       console.log(err);
@@ -41,7 +43,7 @@ export class MessageQueueService {
    * Gets q
    * @returns q 
    */
-  getQ(): Observable<string[]> {
+  /*getQ(): Observable<string[]> {
 
     try {
       this.socket.on('UpadteList', (res) => {
@@ -56,6 +58,7 @@ export class MessageQueueService {
     }
 
   }
+  */
 
 
 
@@ -65,7 +68,7 @@ export class MessageQueueService {
    * Creates observable
    * @returns observable 
    */
-  createObservable(): Observable<string[]> {
+  createObservable(): Observable<any[]> {
     return new Observable(observer => {
       this.observer = observer;
     });
@@ -75,13 +78,15 @@ export class MessageQueueService {
 
 
 
+
   /**
    * Serve Ticket  
    */
-  ServeTicket(): void {
+  ServeTicket():Observable<any>  {
     try {
-
-      this.socket.emit('Serve-Tickets');
+      console.log("serve from client side ")
+      return this.http.get<any>("http://localhost:8124/serveTicket");
+      
     }
 
 

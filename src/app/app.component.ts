@@ -40,10 +40,10 @@ export class AppComponent {
    */
   ngOnInit(): void {
     try {
-      this.subscription = this.service.getQ()
-        .subscribe(List => {
-          this.List = List;
-        });
+  //    this.subscription = this.service.getQ()
+    //    .subscribe(List => {
+      //    this.List = List;
+        //});
     }
     catch (err) {
       console.log(err);
@@ -61,8 +61,11 @@ export class AppComponent {
 
   OnServe(): void {
     try {
-      this.service.ServeTicket();
+      this.subscription = this.service.ServeTicket()
+      .subscribe(List => {
+        this.List = List;
     }
+      )}
     catch (err) {
       console.log(err);
     }
