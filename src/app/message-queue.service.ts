@@ -13,7 +13,7 @@ export class MessageQueueService {
   /**
    * Url  of message queue service
    */
-  private url = 'http://localhost:8124';
+  private url = 'http://localhost:4000';
   List: string[];
   /**
    * Socket  of message queue service
@@ -85,7 +85,7 @@ export class MessageQueueService {
   ServeTicket():Observable<any>  {
     try {
       console.log("serve from client side ")
-      return this.http.get<any>("http://localhost:8124/serveTicket");
+      return this.http.get<any>("http://localhost:4000/serveTicket");
       
     }
 
