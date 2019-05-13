@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
- 
+    resultOfCall:any; 
   /**
    * Memberof  of app component
    */
@@ -23,9 +23,13 @@ export class AppComponent {
   /**
    * Subscription  of app component
    */
-  subscription: Subscription;
+  subscriptionOfList: Subscription;
   
-
+/**
+   * Subscription  of app component
+   */
+  subscriptionResultOfcallAPI: Subscription;
+  
 
       /**
    * Creates an instance of app component.
@@ -40,10 +44,10 @@ export class AppComponent {
    */
   ngOnInit(): void {
     try {
-  //    this.subscription = this.service.getQ()
-    //    .subscribe(List => {
-      //    this.List = List;
-        //});
+     this.subscriptionOfList = this.service.getList()
+        .subscribe(List => {
+          this.List = List;
+        });
     }
     catch (err) {
       console.log(err);
@@ -61,9 +65,9 @@ export class AppComponent {
 
   OnServe(): void {
     try {
-      this.subscription = this.service.ServeTicket()
-      .subscribe(List => {
-        this.List = List;
+      this.subscriptionResultOfcallAPI = this.service.ServeTicket()
+      .subscribe(res => {
+        this.resultOfCall = res;
     }
       )}
     catch (err) {
@@ -77,7 +81,8 @@ export class AppComponent {
 
   ngOnDestroy() {
     try {
-      this.subscription.unsubscribe();
+      this.subscriptionOfList.unsubscribe();
+      this.subscriptionResultOfcallAPI.unsubscribe();
     }
     catch (err) {
       console.log(err);

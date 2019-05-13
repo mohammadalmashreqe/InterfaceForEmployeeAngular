@@ -13,7 +13,7 @@ export class MessageQueueService {
   /**
    * Url  of message queue service
    */
-  private url = 'http://localhost:4000';
+  private url = 'http://localhost:4001';
   List: string[];
   /**
    * Socket  of message queue service
@@ -43,12 +43,14 @@ export class MessageQueueService {
    * Gets q
    * @returns q 
    */
-  /*getQ(): Observable<string[]> {
+  getList(): Observable<string[]> {
 
     try {
-      this.socket.on('UpadteList', (res) => {
-        this.observer.next(res);
-      });
+      this.socket.on('UpadteList', (List) => {
+      
+        console.log("List is  : "+JSON.parse(List));
+          this.observer.next(JSON.parse(List));
+        });
 
       return this.createObservable();
     }
@@ -58,8 +60,7 @@ export class MessageQueueService {
     }
 
   }
-  */
-
+  
 
 
 
@@ -85,7 +86,7 @@ export class MessageQueueService {
   ServeTicket():Observable<any>  {
     try {
       console.log("serve from client side ")
-      return this.http.get<any>("http://localhost:4000/serveTicket");
+      return this.http.get<any>("http://localhost:4001/serveTickets");
       
     }
 
